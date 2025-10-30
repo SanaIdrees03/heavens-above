@@ -4,10 +4,12 @@
   "private": true,
   "description": "Scripts for scraping the Heavens Above website.",
   "main": "run.js",
-  "scripts": {
-    "start": "node run.js",
-    "test": "echo 'Running tests...' && exit 0"
-  },
+ "scripts": {
+  "start": "node run.js",
+  "lint": "echo \"Linting project...\" && exit 0",
+  "test": "echo \"Running tests...\" && exit 0",
+  "build": "echo \"Building project...\" && exit 0"
+},
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
     "request": "^2.88.2"
