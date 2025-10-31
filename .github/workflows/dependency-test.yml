@@ -1,5 +1,6 @@
 name: Dependency Update Test
 
+# Run on every PR to main (adjust branch name if needed)
 on:
   pull_request:
     branches:
@@ -8,19 +9,20 @@ on:
 jobs:
   test-dependencies:
     runs-on: ubuntu-latest
-    if: github.actor == 'dependabot[bot]'  # Run only for Dependabot PRs
+    # only run the job when Dependabot opened the PR (saves CI minutes)
+    if: github.actor == 'dependabot[bot]'
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '18'  # change as needed
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run tests
         run: npm test
