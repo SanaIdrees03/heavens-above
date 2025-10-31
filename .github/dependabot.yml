@@ -1,15 +1,20 @@
 version: 2
 updates:
-  - package-ecosystem: "npm"         # Change to "pip" for Python, "maven" for Java
+  - package-ecosystem: "npm"         # Use "pip" for Python, "maven" for Java, etc.
     directory: "/"                   # Location of package.json or requirements.txt
     schedule:
-      interval: "daily"              # Check daily for updates
+      interval: "weekly"             # You can also set to "daily" if preferred
     open-pull-requests-limit: 5
+    rebase-strategy: "auto"
+    versioning-strategy: increase
     commit-message:
       prefix: "deps"
     reviewers:
-      - your-github-username         # Replace with your GitHub username
+      - your-github-username         # Replace with your actual GitHub username
     allow:
       - dependency-type: "production"   # Follow versioning policy: only production deps
+      - dependency-type: direct
+      - dependency-type: indirect
     ignore:
-      - dependency-type: "development"  # Ignore dev dependencies
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]  # Skip breaking (major) changes
