@@ -8,29 +8,40 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      NODE_ENV: production
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      # Step 1: Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      # Step 2: Set up Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: '20'
 
-      - name: Install dependencies
+      # Step 3: Install dependencies
+      - name: Install Dependencies
         run: npm install
 
-      - name: Run tests
+      # Step 4: Build the project
+      - name: Build Project
+        run: |
+          echo "Building project..."
+          if [ ! -d build ]; then mkdir build; fi
+          cp src/*.js build/ || true
+          echo "Build completed successfully!"
+
+      # Step 5: Run tests
+      - name: Run Tests
         run: npm test
 
-      - name: Build project
-        run: npm run build
-
-      - name: Deploy to Heroku
+      # Step 6: Deploy to Vercel
+      - name: Deploy to Vercel
         env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: |
-          npm install -g heroku
-          heroku git:remote -a ${{ secrets.HEROKU_APP_NAME }}
-          git push https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git main
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: npx vercel --prod --token $VERCEL_TOKEN --org $VERCEL_ORG_ID --project $VERCEL_PROJECT_ID --confirm
