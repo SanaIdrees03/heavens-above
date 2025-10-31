@@ -1,0 +1,26 @@
+name: Documentation Deployment
+
+on:
+  push:
+    paths:
+      - '*.md'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate HTML from README
+        run: |
+          mkdir -p docs
+          pandoc README.md -o docs/index.html
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./docs
