@@ -1,11 +1,15 @@
 version: 2
 updates:
-  - package-ecosystem: "npm"        # or pip, maven, etc.
-    directory: "/"                  # location of package.json or requirements.txt
+  - package-ecosystem: "npm"        # change to "pip", "maven", etc. as needed
+    directory: "/"                  # directory that contains package.json or requirements.txt
     schedule:
-      interval: "daily"             # check for updates daily
-    open-pull-requests-limit: 5     # max open PRs
+      interval: "daily"             # check for updates daily (can be "weekly", "monthly")
+    open-pull-requests-limit: 5
     commit-message:
       prefix: "deps"
     reviewers:
-      - your-github-username        # optional, for PR review
+      - your-github-username        # reviewer(s) to request review from
+    # Optionally specify labels:
+    labels:
+      - "dependencies"
+      - "automated"
