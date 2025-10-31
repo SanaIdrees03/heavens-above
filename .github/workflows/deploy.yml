@@ -8,8 +8,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      NODE_ENV: production
 
     steps:
       # Step 1: Checkout the repository
@@ -39,8 +37,7 @@ jobs:
         run: npm test
 
       # Step 6: Deploy to Vercel
-     - name: Deploy to Vercel
-  env:
-    VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-  run: npx vercel --prod --token $VERCEL_TOKEN --confirm
-
+      - name: Deploy to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: npx vercel --prod --token $VERCEL_TOKEN --confirm
