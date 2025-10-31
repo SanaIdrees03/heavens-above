@@ -1,16 +1,16 @@
 version: 2
 updates:
-  - package-ecosystem: "npm"         # Use "pip" for Python, "maven" for Java, etc.
-    directory: "/"                   # Location of package.json or requirements.txt
+  - package-ecosystem: "npm"         
+    directory: "/"                   # Location of package.json
     schedule:
-      interval: "weekly"             # You can also set to "daily" if preferred
+      interval: "daily"             
     open-pull-requests-limit: 5
     rebase-strategy: "auto"
     versioning-strategy: increase
     commit-message:
       prefix: "deps"
     reviewers:
-      - your-github-username         # Replace with your actual GitHub username
+      - SanaIdrees03        
     allow:
       - dependency-type: "production"   # Follow versioning policy: only production deps
       - dependency-type: direct
